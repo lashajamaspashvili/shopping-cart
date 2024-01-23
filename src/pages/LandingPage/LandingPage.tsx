@@ -1,3 +1,11 @@
+import { Header } from "../../components/Header";
+import { Banner } from "./Banner";
+
 export function LandingPage() {
-  return <div>Landing Page</div>;
+  return (
+    <div>
+      <Header isLandingPage />
+      <Banner />
+    </div>
+  );
 }

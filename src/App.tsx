@@ -5,6 +5,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/products" element={<LandingPage />} />
+      <Route path="/products/:id" element={<LandingPage />} />
+      <Route path="/cart" element={<LandingPage />} />
+      <Route path="/favourites" element={<LandingPage />} />
     </Routes>
   );
 }
