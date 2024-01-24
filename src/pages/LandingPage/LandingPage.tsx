@@ -1,11 +1,16 @@
 import { Header } from "../../components/Header";
 import { Banner } from "./Banner";
+import { Categories } from "./Categories";
+import { SLandingPage } from "./SLandingPage.styled";
+import { SpringCollections } from "./SpringCollections";
 
 export function LandingPage() {
   return (
-    <div>
+    <SLandingPage>
       <Header isLandingPage />
       <Banner />
-    </div>
+      <Categories />
+      <SpringCollections />
+    </SLandingPage>
   );
 }

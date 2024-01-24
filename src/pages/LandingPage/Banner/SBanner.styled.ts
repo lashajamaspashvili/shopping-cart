@@ -14,6 +14,10 @@ export const SBannerInfo = styled.div`
   background: rgba(247, 248, 250, 0.80);
 
   backdrop-filter: blur(12px);
+
+  a {
+    text-decoration: none;
+  }
 `;
 
 export const SBannerText = styled.div`
