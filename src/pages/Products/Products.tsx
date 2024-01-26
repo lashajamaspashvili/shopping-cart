@@ -1,11 +1,16 @@
 import { Header } from "../../components/Header";
-import { SProducts } from "./SProducts.styled";
+import { ProductsList } from "./ProductsList";
+import { ProductsPricesAndCategories } from "./ProductsPriceAndCategories";
+import { SProducts, SProductsInfo } from "./SProducts.styled";
 
 export function Products() {
   return (
     <SProducts>
       <Header />
-      Products Page
+      <SProductsInfo>
+        <ProductsPricesAndCategories />
+        <ProductsList />
+      </SProductsInfo>
     </SProducts>
   );
 }
