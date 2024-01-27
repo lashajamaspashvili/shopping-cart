@@ -22,4 +22,8 @@ export const SProductsListSortBySelect = styled.select`
 
 export const SProductsCards = styled.div`
   ${tw`flex flex-wrap gap-[15px] w-[702px]`}
+
+  a {
+    text-decoration: none;
+  }
 `;

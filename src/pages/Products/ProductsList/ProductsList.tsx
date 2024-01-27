@@ -5,7 +5,7 @@ import {
   SProductsListSortBy,
   SProductsListSortBySelect,
 } from "./SProductsList.styled";
-import { ProductCard } from "./ProductCard";
+import { ProductCard } from "../../../components/ProductCard";
 
 // To Do - global type for products
 
