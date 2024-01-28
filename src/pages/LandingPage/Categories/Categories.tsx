@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import {
   SArrowContainer,
   SCategories,
@@ -9,17 +9,26 @@ import {
 import Left from "../../../assets/left.svg";
 import Right from "../../../assets/right.svg";
 import { Category } from "./Category";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../state/store";
+import { fetchCategories } from "../../../state/categories/categoriesSlice";
 
 export function Categories() {
-  const [categories, setCategories] = useState<string[]>([]);
+  const categories = useSelector(
+    (state: RootState) => state?.categories?.value
+  );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products/categories")
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-      });
-  }, []);
+    if (!categories?.length) {
+      fetch("https://fakestoreapi.com/products/categories")
+        .then((res) => res.json())
+        .then((data) => {
+          dispatch(fetchCategories(data));
+        });
+    }
+  }, [categories]);
 
   return (
     <SCategories>

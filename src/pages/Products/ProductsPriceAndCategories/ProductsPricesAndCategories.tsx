@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   SProductsCategories,
   SProductsCategoriesChoose,
@@ -8,17 +9,25 @@ import {
   SProductsPricesAndCategoriesTitle,
   SProductsPricesRange,
 } from "./SProductsPricesAndCategories.styled";
+import { RootState } from "../../../state/store";
+import { fetchCategories } from "../../../state/categories/categoriesSlice";
 
 export function ProductsPricesAndCategories() {
-  const [categories, setCategories] = useState<string[]>([]);
+  const categories = useSelector(
+    (state: RootState) => state?.categories?.value
+  );
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products/categories")
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-      });
-  }, []);
+    if (!categories?.length) {
+      fetch("https://fakestoreapi.com/products/categories")
+        .then((res) => res.json())
+        .then((data) => {
+          dispatch(fetchCategories(data));
+        });
+    }
+  }, [categories]);
 
   return (
     <SProductsPricesAndCategories>

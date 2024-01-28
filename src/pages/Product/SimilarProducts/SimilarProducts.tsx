@@ -1,43 +1,34 @@
-import { useState, useEffect, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   SSimilarProductsCards,
   SSimilarProducts,
   SSimilarProductsTitle,
 } from "./SSimilarProducts.styled";
-import { ProductsType } from "../../Products/ProductsList/ProductsList";
 import { ProductCard } from "../../../components/ProductCard";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../state/store";
+import { ProductsType } from "../../../types/types";
 
 export function SimilarProducts() {
   const [products, setProducts] = useState<ProductsType[]>([]);
 
-  const { id } = useParams();
-
-  const category = useMemo(
-    () => products?.find((product) => String(product?.id) === id)?.category,
-    [products, id]
-  );
-
-  const filteredProducts = useMemo(
-    () => products?.filter((product) => product?.category === category),
-    [products, category]
+  const product = useSelector(
+    (state: RootState) => state?.currentProduct?.value
   );
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    fetch(`https://fakestoreapi.com/products/category/${product?.category}`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
       });
-  }, []);
-
-  console.log(category);
+  }, [product?.category]);
 
   return (
     <SSimilarProducts>
       <SSimilarProductsTitle>Similar products</SSimilarProductsTitle>
       <SSimilarProductsCards>
-        {filteredProducts?.map((product) => (
+        {products?.map((product) => (
           <ProductCard key={product?.id} product={product} />
         ))}
       </SSimilarProductsCards>

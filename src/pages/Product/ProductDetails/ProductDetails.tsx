@@ -17,13 +17,20 @@ import {
   SproductDetailsWrapper,
   SproductPrice,
 } from "./SProductDetails.styled";
-import { ProductsType } from "../../Products/ProductsList/ProductsList";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../state/store";
+import { fetchCurrentProduct } from "../../../state/currentProduct/currentProductSlice";
 
 export function ProductDetails() {
-  const [product, setProduct] = useState<ProductsType>();
   const [qty, setQty] = useState<number>(1);
 
   const { id } = useParams();
+
+  const product = useSelector(
+    (state: RootState) => state?.currentProduct?.value
+  );
+
+  const dispatch = useDispatch();
 
   function AddToCart() {
     fetch("https://fakestoreapi.com/carts", {
@@ -40,7 +47,7 @@ export function ProductDetails() {
     fetch(`https://fakestoreapi.com/products/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        setProduct(data);
+        dispatch(fetchCurrentProduct(data));
       });
   }, [id]);
 

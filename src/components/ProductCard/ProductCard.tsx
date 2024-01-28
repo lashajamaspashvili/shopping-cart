@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ProductsType } from "../../pages/Products/ProductsList/ProductsList";
 import {
   SProductCard,
   SProductCardCategory,
@@ -9,6 +8,7 @@ import {
   SProductCardPrice,
   SProductCardPriceWrapper,
 } from "./SProductCard.styled";
+import { ProductsType } from "../../types/types";
 
 type ProductCardProps = {
   product: ProductsType;
