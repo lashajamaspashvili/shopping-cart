@@ -5,16 +5,27 @@ export function filterProducts(
   categories: {
     category: string;
     active: boolean;
-  }[]
+  }[],
+  pathname: string,
+  pricesRange: number[]
 ): ProductsType[] {
+  const filteredProducts = pathname?.includes("favourites")
+    ? products?.filter((product) => product?.favourite)
+    : products;
+
   if (categories?.filter((category) => category?.active)?.length) {
-    return products?.filter(
+    return filteredProducts?.filter(
       (product) =>
         categories?.find((category) => category?.category === product?.category)
-          ?.active
+          ?.active &&
+        product?.price >= pricesRange?.[0] &&
+        product?.price <= pricesRange?.[1]
     );
   }
-  return products;
+  return filteredProducts?.filter(
+    (product) =>
+      product?.price >= pricesRange?.[0] && product?.price <= pricesRange?.[1]
+  );
 }
 
 export function pagesArr(products: ProductsType[]) {

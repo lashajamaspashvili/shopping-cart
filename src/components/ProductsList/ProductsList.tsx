@@ -15,25 +15,24 @@ import { fetchProducts } from "../../state/products/productsSlice";
 import { useLocation } from "react-router-dom";
 import { filterProducts, pagesArr } from "./utils/productsList.utils";
 
-export function ProductsList() {
+export function ProductsList({ pricesRange }: { pricesRange: number[] }) {
   const [sortBy, setSortBy] = useState<string>("desc");
   const [currentPage, setCurrentPage] = useState(1);
 
   const location = useLocation();
 
   const products = useSelector((state: RootState) => state?.products?.value);
+
   const categories = useSelector(
     (state: RootState) => state?.categories?.value
   );
 
-  const pages = useMemo(() => pagesArr(products), [products]);
-
   const filteredProducts = useMemo(
-    () => filterProducts(products, categories),
-    [products, categories]
+    () => filterProducts(products, categories, location?.pathname, pricesRange),
+    [products, categories, location?.pathname, pricesRange, filterProducts]
   );
 
-  const favouriteProducts = products?.filter((product) => product?.favourite);
+  const pages = useMemo(() => pagesArr(filteredProducts), [filteredProducts]);
 
   const dispatch = useDispatch();
 
@@ -44,14 +43,14 @@ export function ProductsList() {
   }, [categories]);
 
   useEffect(() => {
-    if (location?.pathname?.includes("products")) {
+    if (location?.pathname?.includes("products") && !products?.length) {
       fetch(`https://fakestoreapi.com/products?sort=${sortBy}`)
         .then((res) => res.json())
         .then((data) => {
           dispatch(fetchProducts(data));
         });
     }
-  }, [sortBy]);
+  }, [sortBy, products?.length]);
 
   return (
     <SProductsList>
@@ -67,21 +66,13 @@ export function ProductsList() {
           </SProductsListSortBySelect>
         </SProductsListSortBy>
       ) : null}
-      {location?.pathname?.includes("favourites") ? (
-        <SProductsCards>
-          {favouriteProducts?.map((product) => (
+      <SProductsCards>
+        {filteredProducts
+          ?.slice((currentPage - 1) * 9, currentPage * 9)
+          ?.map((product) => (
             <ProductCard key={product?.id} product={product} />
           ))}
-        </SProductsCards>
-      ) : (
-        <SProductsCards>
-          {filteredProducts
-            ?.slice((currentPage - 1) * 9, currentPage * 9)
-            ?.map((product) => (
-              <ProductCard key={product?.id} product={product} />
-            ))}
-        </SProductsCards>
-      )}
+      </SProductsCards>
       {filteredProducts?.length > 9 ? (
         <SPagination>
           <SArrowContainer

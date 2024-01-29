@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, Dispatch, SetStateAction } from "react";
+import Slider from "react-slider";
 import { useDispatch, useSelector } from "react-redux";
 import {
   SProductsCategories,
@@ -7,12 +8,19 @@ import {
   SProductsPricesAndCategories,
   SProductsPricesAndCategoriesTitle,
   SProductsPricesRange,
+  SSliderWrapper,
 } from "./SProductsPricesAndCategories.styled";
 import { RootState } from "../../state/store";
 import { fetchCategories } from "../../state/categories/categoriesSlice";
 import { CategoryFilter } from "./CategoryFilter";
 
-export function ProductsPricesAndCategories() {
+export function ProductsPricesAndCategories({
+  values,
+  setValues,
+}: {
+  values: number[];
+  setValues: Dispatch<SetStateAction<number[]>>;
+}) {
   const categories = useSelector(
     (state: RootState) => state?.categories?.value
   );
@@ -41,11 +49,11 @@ export function ProductsPricesAndCategories() {
         </SProductsPricesAndCategoriesTitle>
         <SProductsPricesRange>
           <span>Range</span>
-          {/* To Do - price filter functional */}
-          <span>filter</span>
+          <span>{`$ ${values?.[0]}  -  $ ${values?.[1]}`}</span>
         </SProductsPricesRange>
-        {/* To Do - price filter markup */}
-        <div>markup</div>
+        <SSliderWrapper>
+          <Slider value={values} onChange={setValues} min={0} max={1000} />
+        </SSliderWrapper>
       </SProductsPrices>
       <SProductsCategories>
         <SProductsPricesAndCategoriesTitle>
