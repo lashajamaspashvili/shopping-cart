@@ -16,9 +16,20 @@ const productsSlice = createSlice({
     fetchProducts: (state, action: PayloadAction<ProductsType[]>) => {
       state.value = action?.payload;
     },
+    addToFavourites: (state, action: PayloadAction<number>) => {
+      state.value.find(
+        (product) => product?.id === action?.payload
+      )!.favourite = true;
+    },
+    removeFromFavourites: (state, action: PayloadAction<number>) => {
+      state.value.find(
+        (product) => product?.id === action?.payload
+      )!.favourite = false;
+    },
   },
 });
 
-export const { fetchProducts } = productsSlice?.actions;
+export const { fetchProducts, addToFavourites, removeFromFavourites } =
+  productsSlice?.actions;
 
 export default productsSlice?.reducer;

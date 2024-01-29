@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   SHeader,
   SHeaderIcons,
@@ -9,12 +9,15 @@ import Logo from "../../assets/closet.png";
 import Profile from "../../assets/profile.svg";
 import Cart from "../../assets/cart.svg";
 import Heart from "../../assets/heart.svg";
+import RedHeart from "../../assets/redHeart.svg";
 
 type HeaderProps = {
   isLandingPage?: boolean;
 };
 
 export function Header({ isLandingPage }: HeaderProps) {
+  const location = useLocation();
+
   return (
     <SHeader>
       <Link to="/">
@@ -35,7 +38,7 @@ export function Header({ isLandingPage }: HeaderProps) {
             <img src={Profile} />
           </SIconContainer>
         </Link>
-        <Link to="cart">
+        <Link to="/cart">
           <SIconContainer>
             <img src={Cart} />
           </SIconContainer>
@@ -43,7 +46,11 @@ export function Header({ isLandingPage }: HeaderProps) {
         {!isLandingPage ? (
           <Link to="/favourites">
             <SIconContainer>
-              <img src={Heart} />
+              {location?.pathname?.includes("favourites") ? (
+                <img src={RedHeart} />
+              ) : (
+                <img src={Heart} />
+              )}
             </SIconContainer>
           </Link>
         ) : null}

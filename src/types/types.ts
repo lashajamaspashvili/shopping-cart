@@ -9,4 +9,20 @@ export type ProductsType = {
     rate: number;
   };
   title: string;
+  favourite?: boolean;
+};
+
+export type CartType = {
+  id: number;
+  userId: number;
+  date: string;
+  products: {
+    productId: number;
+    quantity: number;
+  }[];
+};
+
+export type ModifiedCartItem = {
+  product: ProductsType;
+  qty: number;
 };

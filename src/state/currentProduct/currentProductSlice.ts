@@ -2,11 +2,23 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { ProductsType } from "../../types/types";
 
 type currentProductState = {
-  value?: ProductsType;
+  value: ProductsType;
 };
 
 const initialState: currentProductState = {
-  value: undefined,
+  value: {
+    category: "",
+    description: "",
+    id: 0,
+    image: "",
+    price: 0,
+    rating: {
+      count: 0,
+      rate: 0,
+    },
+    title: "",
+    favourite: false,
+  },
 };
 
 const currentProductSlice = createSlice({

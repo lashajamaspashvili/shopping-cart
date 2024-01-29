@@ -11,7 +11,7 @@ export function LandingPage() {
       <Header isLandingPage />
       <Banner />
       <Categories />
-      <SpringCollections />
+      <SpringCollections targetDate={new Date().getTime() + 633847000} />
       <Highlights />
     </SLandingPage>
   );

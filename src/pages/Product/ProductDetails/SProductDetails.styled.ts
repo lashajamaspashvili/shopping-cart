@@ -55,7 +55,7 @@ export const SProductQuantity = styled.div`
 `;
 
 export const SProductQuantityNumber = styled.div`
-  ${tw`border border-solid border-[#3E5673] gap-2 px-2 py-1 flex items-center`}
+  ${tw`border border-solid border-[#3E5673] gap-2 px-3 py-1 flex items-center`}
 
   span:last-child {
     ${tw`mb-1`}
@@ -75,7 +75,7 @@ export const SproductAddToCart = styled.div`
 `;
 
 export const SArrowContainer = styled.div`
-  ${tw`w-8 h-8 rounded border border-solid border-[#415878] flex items-center justify-center hover:cursor-pointer`}
+  ${tw`w-8 h-8 rounded border border-solid border-[#415878] flex items-center justify-center cursor-pointer`}
 `;
 
 export const SImagesContainer = styled.div`

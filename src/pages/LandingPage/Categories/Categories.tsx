@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   SArrowContainer,
   SCategories,
@@ -18,6 +18,8 @@ export function Categories() {
     (state: RootState) => state?.categories?.value
   );
 
+  const [categoriesFrom, setCategoriesFrom] = useState<number>(0);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,7 +27,11 @@ export function Categories() {
       fetch("https://fakestoreapi.com/products/categories")
         .then((res) => res.json())
         .then((data) => {
-          dispatch(fetchCategories(data));
+          dispatch(
+            fetchCategories(
+              data?.map((category: string) => ({ category, active: false }))
+            )
+          );
         });
     }
   }, [categories]);
@@ -33,17 +39,26 @@ export function Categories() {
   return (
     <SCategories>
       <SCategoriesTitle>Categories</SCategoriesTitle>
-      {"To Do - Carusel"}
       <SCategoriesContainer>
-        <SArrowContainer>
+        <SArrowContainer
+          onClick={() =>
+            setCategoriesFrom((prev) => (prev === 0 ? 0 : prev - 1))
+          }
+        >
           <img src={Left} alt="Left arrow" />
         </SArrowContainer>
         <SCategoryCardsWrapper>
-          {categories?.map((category) => (
-            <Category key={category} name={category} />
-          ))}
+          {categories
+            ?.slice(categoriesFrom, categoriesFrom + 4)
+            ?.map((category) => (
+              <Category key={category?.category} name={category?.category} />
+            ))}
         </SCategoryCardsWrapper>
-        <SArrowContainer>
+        <SArrowContainer
+          onClick={() =>
+            setCategoriesFrom((prev) => (prev === 2 ? 2 : prev + 1))
+          }
+        >
           <img src={Right} alt="Right arrow" />
         </SArrowContainer>
       </SCategoriesContainer>

@@ -6,10 +6,20 @@ export const SProductCard = styled.div`
 `;
 
 export const SProductCardImage = styled.div`
-  ${tw`w-full h-[258px]`}
+  ${tw`w-full h-[258px] relative`}
 
   img {
     ${tw`w-full h-full`}
+  }
+`;
+
+export const SProductCardFavouriteButton = styled.div`
+  ${tw`w-9 h-9 absolute right-3 top-3 flex items-center justify-center`}
+
+  background: rgba(0, 0, 0, 0.30);
+
+  img {
+    ${tw`w-1/2 h-1/2`}
   }
 `;
 

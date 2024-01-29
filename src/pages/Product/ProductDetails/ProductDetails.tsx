@@ -20,9 +20,19 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
 import { fetchCurrentProduct } from "../../../state/currentProduct/currentProductSlice";
+import { AuthModal } from "./AuthModal";
+import {
+  addToCart,
+  createCart,
+  updateCart,
+} from "../../../state/cart/cartSlice";
 
 export function ProductDetails() {
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const [qty, setQty] = useState<number>(1);
+
+  const auth = useSelector((state: RootState) => state?.auth?.value);
+  const cart = useSelector((state: RootState) => state?.cart?.value);
 
   const { id } = useParams();
 
@@ -33,15 +43,20 @@ export function ProductDetails() {
   const dispatch = useDispatch();
 
   function AddToCart() {
-    fetch("https://fakestoreapi.com/carts", {
-      method: "POST",
-      body: JSON.stringify({
-        userId: 5,
-        date: new Date(),
-        products: [{ productId: id, quantity: qty }],
-      }),
-    }).then((res) => res.json());
+    if (cart?.length === 0) {
+      dispatch(createCart({ product, qty }));
+    } else if (
+      cart?.findIndex((item) => item?.product?.id === product?.id) === -1
+    ) {
+      dispatch(addToCart({ product, qty }));
+    } else {
+      dispatch(updateCart({ productId: product?.id, qty }));
+    }
   }
+
+  useEffect(() => {
+    setQty(cart?.find((item) => item?.product?.id === product?.id)?.qty || 1);
+  }, [cart, product]);
 
   useEffect(() => {
     fetch(`https://fakestoreapi.com/products/${id}`)
@@ -84,7 +99,9 @@ export function ProductDetails() {
               </SProductQuantityNumberButton>
             </SProductQuantityNumber>
           </SProductQuantity>
-          <SproductAddToCart onClick={AddToCart}>
+          <SproductAddToCart
+            onClick={() => (auth ? AddToCart() : setShowAuthModal(true))}
+          >
             <img src={Cart} alt="Cart" />
             <span>+ Add to cart</span>
           </SproductAddToCart>
@@ -108,6 +125,9 @@ export function ProductDetails() {
         </SImageCardsWrapper>
         <SArrowContainer>{">"}</SArrowContainer>
       </SImagesContainer>
+      {showAuthModal ? (
+        <AuthModal onClose={() => setShowAuthModal(false)} />
+      ) : null}
     </>
   );
 }

@@ -2,17 +2,17 @@ import { Header } from "../../components/Header";
 import { SHorizontalDivider } from "../../components/HorizontalDivider";
 import { ProductsList } from "../../components/ProductsList";
 import { ProductsPricesAndCategories } from "../../components/ProductsPriceAndCategories";
-import { SProducts, SProductsInfo } from "./SProducts.styled";
+import { SFavourites, SFavouritesInfo } from "./SFavourites.styled";
 
-export function Products() {
+export function Favourites() {
   return (
-    <SProducts>
+    <SFavourites>
       <Header />
       <SHorizontalDivider />
-      <SProductsInfo>
+      <SFavouritesInfo>
         <ProductsPricesAndCategories />
         <ProductsList />
-      </SProductsInfo>
-    </SProducts>
+      </SFavouritesInfo>
+    </SFavourites>
   );
 }

@@ -6,5 +6,5 @@ export const SProducts = styled.div`
 `;
 
 export const SProductsInfo = styled.div`
-  ${tw`flex justify-between items-start w-full mt-12 mb-[214px] px-[120px]`}
+  ${tw`flex justify-between items-start w-full mt-12 mb-[123px] px-[120px]`}
 `;

@@ -3,6 +3,10 @@ import tw from "twin.macro";
 
 export const SSimilarProducts = styled.div`
   ${tw`mt-[100px] flex flex-col gap-5`}
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const SSimilarProductsTitle = styled.div`
@@ -17,10 +21,5 @@ export const SSimilarProductsCards = styled.div`
 
   a {
     text-decoration: none;
-  }
-
-  // To Do - hide scrollbar
-  ::-webkit-scrollbar {
-    display: none;
   }
 `;

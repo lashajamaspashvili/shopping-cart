@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   SProductsCategories,
   SProductsCategoriesChoose,
-  SProductsCategoriesChooseItem,
   SProductsPrices,
   SProductsPricesAndCategories,
   SProductsPricesAndCategoriesTitle,
   SProductsPricesRange,
 } from "./SProductsPricesAndCategories.styled";
-import { RootState } from "../../../state/store";
-import { fetchCategories } from "../../../state/categories/categoriesSlice";
+import { RootState } from "../../state/store";
+import { fetchCategories } from "../../state/categories/categoriesSlice";
+import { CategoryFilter } from "./CategoryFilter";
 
 export function ProductsPricesAndCategories() {
   const categories = useSelector(
@@ -24,7 +24,11 @@ export function ProductsPricesAndCategories() {
       fetch("https://fakestoreapi.com/products/categories")
         .then((res) => res.json())
         .then((data) => {
-          dispatch(fetchCategories(data));
+          dispatch(
+            fetchCategories(
+              data?.map((category: string) => ({ category, active: false }))
+            )
+          );
         });
     }
   }, [categories]);
@@ -47,13 +51,9 @@ export function ProductsPricesAndCategories() {
         <SProductsPricesAndCategoriesTitle>
           CATEGORIES
         </SProductsPricesAndCategoriesTitle>
-        {/* To Do - categories filter */}
         <SProductsCategoriesChoose>
           {categories?.map((category) => (
-            <SProductsCategoriesChooseItem key={category}>
-              <input type="checkbox" />
-              <label>{category}</label>
-            </SProductsCategoriesChooseItem>
+            <CategoryFilter key={category?.category} category={category} />
           ))}
         </SProductsCategoriesChoose>
       </SProductsCategories>

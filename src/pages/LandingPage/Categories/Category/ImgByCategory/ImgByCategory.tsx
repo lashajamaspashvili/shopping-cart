@@ -18,7 +18,7 @@ export function ImgByCategory({ name }: ImgByCategoryProps) {
     case "women's clothing":
       return <img src={Glasses} alt="Glasses" />;
     default:
-      break;
+      return <img src={Jacket} alt="Jacket" />;
   }
   return null;
 }

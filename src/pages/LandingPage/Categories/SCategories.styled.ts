@@ -13,11 +13,7 @@ export const SCategoriesTitle = styled.div`
 `;
 
 export const SArrowContainer = styled.div`
-  ${tw`w-12 h-12 rounded-full border border-solid border-[#415878] flex items-center justify-center`}
-
-  :hover {
-    ${tw`cursor-pointer`}
-  }
+  ${tw`w-12 h-12 rounded-full border border-solid border-[#415878] flex items-center justify-center cursor-pointer`}
 `;
 
 export const SCategoriesContainer = styled.div`
